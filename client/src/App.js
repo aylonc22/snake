@@ -1,6 +1,6 @@
 import React,{useState,useEffect,useRef} from 'react'
 import './App.css';
-
+import snakeIco from './snake_game.png'
 function App() {
  
   const initRow = []
@@ -10,6 +10,9 @@ function App() {
     for(let j=0;j<35;j++)
       initRow[i].push(0);
   }
+  const randomColor = ()=>{
+    return Math.floor(Math.random()*16777215).toString(16);
+  }
   const [interval,setinterval] = useState(250);
   const [gameOver,setGameOver] = useState(false);
   const [board,setBoard] = useState(initRow);
@@ -18,6 +21,8 @@ function App() {
   const [oldDirection,setOldDirection] = useState("ArrowLeft");
   const [apple,setApple] = useState({x: Math.floor(Math.random()*board.length), y: Math.floor(Math.random()*board.length)});
   const [appleCount,setAppleCount] = useState(0);
+  const [snakeColor,setSnakeColor] = useState(`#${randomColor()}`);
+  const [appleColor,setAppleColor] = useState(`#${randomColor()}`);    
   const displaySnake = ()=>{
     let newBoard = [...initRow];
     newBoard[apple.y][apple.x] = 1;   
@@ -37,8 +42,7 @@ function App() {
     setBoard(newBoard);
   }
   const moveSnake = (key)=>{
-    let newSnake =[];
-    console.log(key);
+    let newSnake =[];    
    let flag = true
    if(key!==undefined)
    {
@@ -77,8 +81,7 @@ function App() {
     if(board[newSnake[0].y][newSnake[0].x] === 3)
       {
         setinterval(null);
-        setGameOver(true);
-        setSnake()
+        setGameOver(true);        
       }
   else
   {
@@ -90,6 +93,7 @@ function App() {
     setApple({x: Math.floor(Math.random()*board.length), y: Math.floor(Math.random()*board.length)});
     setAppleCount(count=>count+1);
     newSnake.push(snake[snake.length-1]);
+    setSnakeColor(`#${randomColor()}`);
   }
 
   setSnake(newSnake);
@@ -97,8 +101,7 @@ function App() {
   }
   }
   const handleKey = (e)=>{
-    const {key} =e;    
-  console.log("test");      
+    const {key} =e;           
     if((key==="ArrowLeft" || key==="ArrowRight" || key==="ArrowUp" || key==="ArrowDown") &&  direction!==key)
             {             
               setOldDirection(direction);
@@ -116,18 +119,22 @@ function App() {
              setOldDirection("ArrowLeft");
              setApple({x: Math.floor(Math.random()*board.length), y: Math.floor(Math.random()*board.length)});
              setAppleCount(0);
+             setAppleColor(`#${randomColor()}`);            
+             setSnakeColor(`#${randomColor()}`);
             }
-  }
-  const handleCell = (cell)=>{
+  }  
+
+  const handleStyle = (cell)=>{
     if(cell===0)
-      return "cell"
+    return {};
     if(cell===1)
-      return "cell apple"
+      return {backgroundColor:appleColor};
     if(cell===2)
-      return "cell snake"
+      return {backgroundColor:snakeColor};
     if(cell===3)
-      return "cell snake"
-  } 
+      return {backgroundColor:snakeColor};;
+  }
+
   function useInterval(callback, delay) {
 
     const savedCallback = useRef();
@@ -162,7 +169,6 @@ function App() {
     
     }
   useInterval(moveSnake,interval);
-    
   return (
     <div tabIndex ="1" className="App" onKeyUp ={(e)=>handleKey(e)}>
      <div className ="top"><div>Simple React Snake</div><div className = "apples">{`Apples Eaten ${appleCount}`}</div>  </div>
@@ -172,9 +178,10 @@ function App() {
        <div className="label">{`you ate ${appleCount} apples good job`}</div>
        <div className="label">press space to start again</div>
        </div>:board.map((row,i)=><div key ={i} className = "row">
-       {row.map((cell,index)=><div key ={index} className = {handleCell(cell)}></div>)}
+       {row.map((cell,index)=><div key ={index} style ={handleStyle(cell)} className = "cell"></div>)}
      </div>)}    
      </div>
+     <img className ="snake" src ={snakeIco} alt=""/>
     </div>
   );
 }
