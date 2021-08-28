@@ -36,28 +36,44 @@ function App() {
     });    
     setBoard(newBoard);
   }
-  const moveSnake = ()=>{
+  const moveSnake = (key)=>{
     let newSnake =[];
+    console.log(key);
    let flag = true
-    if(direction==="ArrowLeft" && oldDirection!== "ArrowRight" )
-       { newSnake.push({x:snake[0].x -1 === -1 ? board[0].length-1:snake[0].x -1 , y:snake[0].y}); flag=false;}
-    if(direction==="ArrowRight"  && oldDirection!== "ArrowLeft")
-        {newSnake.push({x:snake[0].x +1 === board[0].length?0:snake[0].x +1, y:snake[0].y}); flag=false;}
-    if(direction==="ArrowUp" && oldDirection!== "ArrowDown")
-        {newSnake.push({x:snake[0].x, y:snake[0].y - 1 === -1 ? board.length-1:snake[0].y - 1}); flag=false;}
-    if(direction==="ArrowDown" && oldDirection!== "ArrowUp")
-    {newSnake.push({x:snake[0].x, y:snake[0].y + 1 === board.length?0:snake[0].y + 1}); flag=false;}
-    if(flag)
-    {
-          if(oldDirection==="ArrowLeft" )
-              newSnake.push({x:snake[0].x -1 === -1 ? board[0].length-1:snake[0].x -1 , y:snake[0].y});
-          if(oldDirection==="ArrowRight" )
-              newSnake.push({x:snake[0].x +1 === board[0].length?0:snake[0].x +1, y:snake[0].y});
-          if(oldDirection==="ArrowUp" )
-              newSnake.push({x:snake[0].x, y:snake[0].y - 1 === -1 ? board.length-1:snake[0].y - 1});
-          if(oldDirection==="ArrowDown" )
-               newSnake.push({x:snake[0].x, y:snake[0].y + 1 === board.length?0:snake[0].y + 1});
-    }
+   if(key!==undefined)
+   {
+        if(key==="ArrowLeft" && direction!== "ArrowRight" )
+             { newSnake.push({x:snake[0].x -1 === -1 ? board[0].length-1:snake[0].x -1 , y:snake[0].y}); flag=false;}
+        if(key==="ArrowRight"  && direction!== "ArrowLeft")
+              {newSnake.push({x:snake[0].x +1 === board[0].length?0:snake[0].x +1, y:snake[0].y}); flag=false;}
+        if(key==="ArrowUp" && direction!== "ArrowDown")
+              {newSnake.push({x:snake[0].x, y:snake[0].y - 1 === -1 ? board.length-1:snake[0].y - 1}); flag=false;}
+        if(key==="ArrowDown" && direction!== "ArrowUp")
+            {newSnake.push({x:snake[0].x, y:snake[0].y + 1 === board.length?0:snake[0].y + 1}); flag=false;}
+   } 
+   else
+        {
+            if(direction==="ArrowLeft" && oldDirection!== "ArrowRight" )
+                { newSnake.push({x:snake[0].x -1 === -1 ? board[0].length-1:snake[0].x -1 , y:snake[0].y}); flag=false;}
+            if(direction==="ArrowRight"  && oldDirection!== "ArrowLeft")
+                {newSnake.push({x:snake[0].x +1 === board[0].length?0:snake[0].x +1, y:snake[0].y}); flag=false;}
+            if(direction==="ArrowUp" && oldDirection!== "ArrowDown")
+                {newSnake.push({x:snake[0].x, y:snake[0].y - 1 === -1 ? board.length-1:snake[0].y - 1}); flag=false;}
+            if(direction==="ArrowDown" && oldDirection!== "ArrowUp")
+                {newSnake.push({x:snake[0].x, y:snake[0].y + 1 === board.length?0:snake[0].y + 1}); flag=false;}
+        }
+        if(flag)
+            {
+                  if(oldDirection==="ArrowLeft" )
+                      newSnake.push({x:snake[0].x -1 === -1 ? board[0].length-1:snake[0].x -1 , y:snake[0].y});
+                  if(oldDirection==="ArrowRight" )
+                      newSnake.push({x:snake[0].x +1 === board[0].length?0:snake[0].x +1, y:snake[0].y});
+                  if(oldDirection==="ArrowUp" )
+                      newSnake.push({x:snake[0].x, y:snake[0].y - 1 === -1 ? board.length-1:snake[0].y - 1});
+                  if(oldDirection==="ArrowDown" )
+                      newSnake.push({x:snake[0].x, y:snake[0].y + 1 === board.length?0:snake[0].y + 1});
+            }
+    
     if(board[newSnake[0].y][newSnake[0].x] === 3)
       {
         setinterval(null);
@@ -81,11 +97,13 @@ function App() {
   }
   }
   const handleKey = (e)=>{
-    const {key} =e;          
+    const {key} =e;    
+  console.log("test");      
     if((key==="ArrowLeft" || key==="ArrowRight" || key==="ArrowUp" || key==="ArrowDown") &&  direction!==key)
             {             
               setOldDirection(direction);
               setDirection(key);
+              moveSnake(key)
             }
     else
     if(key===" " && gameOver)
@@ -97,6 +115,7 @@ function App() {
               setDirection("ArrowLeft");
              setOldDirection("ArrowLeft");
              setApple({x: Math.floor(Math.random()*board.length), y: Math.floor(Math.random()*board.length)});
+             setAppleCount(0);
             }
   }
   const handleCell = (cell)=>{
