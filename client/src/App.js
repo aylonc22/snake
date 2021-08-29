@@ -21,8 +21,8 @@ function App() {
   const [oldDirection,setOldDirection] = useState("ArrowLeft");
   const [apple,setApple] = useState({x: Math.floor(Math.random()*board.length), y: Math.floor(Math.random()*board.length)});
   const [appleCount,setAppleCount] = useState(0);
-  const [snakeColor,setSnakeColor] = useState(`#${randomColor()}`);
-  const [appleColor,setAppleColor] = useState(`#${randomColor()}`);    
+  const [snakeColor,setSnakeColor] = useState(`blue`);
+  const [appleColor,setAppleColor] = useState(`red`);    
   const displaySnake = ()=>{
     let newBoard = [...initRow];
     newBoard[apple.y][apple.x] = 1;   
@@ -170,7 +170,7 @@ function App() {
     }
   useInterval(moveSnake,interval);
   return (
-    <div tabIndex ="1" className="App" onKeyUp ={(e)=>handleKey(e)}>
+    <div tabIndex ="1" className="App" onKeyUp  ={(e)=>handleKey(e)}>
      <div className ="top"><div>Simple React Snake</div><div className = "apples">{`Apples Eaten ${appleCount}`}</div>  </div>
      <div className ="board">
      {gameOver?<div className ="gameOver">
