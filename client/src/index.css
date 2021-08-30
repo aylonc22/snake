@@ -11,3 +11,9 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+@font-face {
+  font-family: "RobloxBold";
+  src: local("RobloxBold"),
+   url("./font/Roblox\ Font\ Bold.ttf") format("truetype");
+  font-weight: bold;
+  }

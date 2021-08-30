@@ -1,4 +1,4 @@
-html, body {margin: 0; height: 100%; overflow: hidden}
+html, body {margin: 0; height: 100%; overflow: hidden; font-family: RobloxBold;}
 .App {
   text-align: center;
   width: 100%;
@@ -69,7 +69,3 @@ background: radial-gradient(circle, rgba(0,255,12,1) 14%, rgba(10,149,7,1) 92%);
   align-self: flex-end;
   margin-top: 25%;
 }
-
-
- 
-

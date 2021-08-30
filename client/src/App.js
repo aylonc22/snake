@@ -10,9 +10,6 @@ function App() {
     for(let j=0;j<35;j++)
       initRow[i].push(0);
   }
-  const randomColor = ()=>{
-    return Math.floor(Math.random()*16777215).toString(16);
-  }
   const [interval,setinterval] = useState(250);
   const [gameOver,setGameOver] = useState(false);
   const [board,setBoard] = useState(initRow);
@@ -21,8 +18,8 @@ function App() {
   const [oldDirection,setOldDirection] = useState("ArrowLeft");
   const [apple,setApple] = useState({x: Math.floor(Math.random()*board.length), y: Math.floor(Math.random()*board.length)});
   const [appleCount,setAppleCount] = useState(0);
-  const [snakeColor,setSnakeColor] = useState(`blue`);
-  const [appleColor,setAppleColor] = useState(`red`);    
+  const [snakeColor] = useState(`blue`);
+  const [appleColor] = useState(`red`);    
   const displaySnake = ()=>{
     let newBoard = [...initRow];
     newBoard[apple.y][apple.x] = 1;   
@@ -92,8 +89,7 @@ function App() {
   {
     setApple({x: Math.floor(Math.random()*board.length), y: Math.floor(Math.random()*board.length)});
     setAppleCount(count=>count+1);
-    newSnake.push(snake[snake.length-1]);
-    setSnakeColor(`#${randomColor()}`);
+    newSnake.push(snake[snake.length-1]);  
   }
 
   setSnake(newSnake);
@@ -118,9 +114,7 @@ function App() {
               setDirection("ArrowLeft");
              setOldDirection("ArrowLeft");
              setApple({x: Math.floor(Math.random()*board.length), y: Math.floor(Math.random()*board.length)});
-             setAppleCount(0);
-             setAppleColor(`#${randomColor()}`);            
-             setSnakeColor(`#${randomColor()}`);
+             setAppleCount(0);            
             }
   }  
 
